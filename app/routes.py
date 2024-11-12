@@ -6,7 +6,7 @@ from openai import OpenAI
 import os
 from app.services.email_into_transaction import EmailIntoTransaction
 import json
-import re
+
 
 
 client = OpenAI(api_key=os.environ.get('OPENAI_KEY'))
@@ -25,7 +25,7 @@ def email_form():
         db.session.commit()
         flash('Email submitted successfully!')
 
-        EmailIntoTransaction(body).call
+        EmailIntoTransaction().call(new_email)
 
         return redirect(url_for('index'))
     return render_template('email_form.html')
@@ -39,30 +39,30 @@ def transactions():
 def chatgpt():
     user_input = """
         transform this transaction email text
-            "Constancia de Pago Plin
-            10 Nov 2024 11:26 AM
-            from: Interbank Servicio al Cliente <servicioalcliente@netinterbank.com.pe>
-            Código de operación:	01483653
-            Cuenta cargo:	Ahorro Sueldo Soles
-            108 3094799772
-            Destinatario:	Samuel Antonio Pezua Espinoza
-            Destino:	Plin
-            Moneda y monto:	S/ 13.20"
-            
-            into a json object like this:
-            {
-                fecha: '31-12-2024',
-                codigo_de_operacion: 12345,
-                banco: 'Interbank',
-                cuenta_cargo: 'Juan Perez',
-                cuenta_destino: '1234567890',
-                moneda: USD,
-                monto: 30
-            }
+        "Constancia de Pago Plin
+        10 Nov 2024 11:26 AM
+        from: Interbank Servicio al Cliente <servicioalcliente@netinterbank.com.pe>
+        Código de operación:	01483653
+        Cuenta cargo:	Ahorro Sueldo Soles
+        108 3094799772
+        Destinatario:	Samuel Antonio Pezua Espinoza
+        Destino:	Plin
+        Moneda y monto:	S/ 13.20"
+        
+        into a json object like this:
+        {
+            fecha: '2024-12-31',
+            codigo_de_operacion: 12345,
+            banco: 'Interbank',
+            cuenta_cargo: 'Juan Perez',
+            cuenta_destino: '1234567890',
+            moneda: USD,
+            monto: 30
+        }
 
-            moneda tiene que ser: PEN, USD o NONE
+        moneda tiene que ser: PEN, USD o NONE
 
-            return only the json object
+        return only the json object
     """
     # response = client.chat.completions.create(
     #     model="gpt-4o-mini",
@@ -74,7 +74,7 @@ def chatgpt():
 
     message = """```json
         {
-            "fecha": "10-11-2024",
+            "fecha": "2024-12-31",
             "codigo_de_operacion": "01483653",
             "banco": "Interbank",
             "cuenta_cargo": "Ahorro Sueldo Soles 108 3094799772",
@@ -85,28 +85,9 @@ def chatgpt():
         ```
     """
     parsed_message = message.replace("```json", "").replace("```", "")
-    # parsed_message = re.sub(r'```(?:json)?', '', message).strip()
-    # print('message')
-    # print(message)
-    # print(parsed_message)
 
-
-    print(EmailIntoTransaction(message).call())
+    print(EmailIntoTransaction(user_input).call())
 
     json_data = json.loads(parsed_message)
-
-    print(json_data)
-    print(json_data["moneda"])
-
-    # for chunk in stream:
-    #     if chunk.choices[0].delta.content is not None:
-    #         message =  chunk.choices[0].delta.content
-    #     else:
-    #         message = "there is no content"
-    #     messages.append(message)
-    #     print(message)
-
-    # print(response.choices[0].message['content'])
-
 
     return render_template('chatgpt.html', message=json_data["moneda"])
