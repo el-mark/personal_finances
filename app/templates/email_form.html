@@ -2,12 +2,25 @@
 
 {% block content %}
 
-    <h1>Submit an Email</h1>
-    <form method="POST">
-        <label for="body">Body:</label>
-        <textarea id="body" name="body" required></textarea>
-        <br>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+
+        
+        
+        <div>
+                <h1>Submit an Email</h1>
+
+                <form method="POST">
+
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Body:</label>
+                      <textarea class="form-control" id="body" name="body" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            
+        
+            </div>
+    </div>
     
 {% endblock %}

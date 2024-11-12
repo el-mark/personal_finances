@@ -29,7 +29,7 @@ class EmailIntoTransaction:
                 codigo_de_operacion: 12345,
                 banco: 'Interbank',
                 cuenta_cargo: 'Juan Perez',
-                cuenta_destino: '1234567890',
+                cuenta_destinatario: '1234567890',
                 moneda: USD,
                 monto: 30
             }}
@@ -71,7 +71,7 @@ class EmailIntoTransaction:
             transaction_code=json_data["codigo_de_operacion"],
             issuer=json_data["banco"],
             source=json_data["cuenta_cargo"],
-            destination=json_data["cuenta_destino"],
+            destination=json_data["cuenta_destinatario"],
             currency=json_data["moneda"],
             amount=json_data["monto"]
         )

@@ -27,7 +27,7 @@ def email_form():
 
         EmailIntoTransaction().call(new_email)
 
-        return redirect(url_for('index'))
+        return redirect(url_for('transactions'))
     return render_template('email_form.html')
 
 @app.route('/transactions')
