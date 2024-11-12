@@ -8,6 +8,7 @@ from enum import Enum
 class CurrencyEnum(Enum):
     PEN = "soles"
     USD = "dólares"
+    NONE = "no identificado"
 
 class Email(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
