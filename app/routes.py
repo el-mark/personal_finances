@@ -4,6 +4,8 @@ from app.models import Email, Transaction
 from app import db
 from openai import OpenAI
 import os
+from app.services.email_into_transaction import EmailIntoTransaction
+
 
 
 client = OpenAI(api_key=os.environ.get('OPENAI_KEY'))
@@ -21,6 +23,9 @@ def email_form():
         db.session.add(new_email)
         db.session.commit()
         flash('Email submitted successfully!')
+
+        EmailIntoTransaction(body).call
+
         return redirect(url_for('index'))
     return render_template('email_form.html')
 
@@ -58,13 +63,33 @@ def chatgpt():
 
         return only the json object
     """
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": user_input}]
-    )
+    # response = client.chat.completions.create(
+    #     model="gpt-4o-mini",
+    #     messages=[{"role": "user", "content": user_input}]
+    # )
 
-    message = response.choices[0].message.content
+    # message = response.choices[0].message.content
+    # print(message)
+
+    message = """```json
+        {
+            "fecha": "10-11-2024",
+            "codigo_de_operacion": "01483653",
+            "banco": "Interbank",
+            "cuenta_cargo": "Ahorro Sueldo Soles 108 3094799772",
+            "cuenta_destino": "Samuel Antonio Pezua Espinoza",
+            "moneda": "PEN",
+            "monto": 13.20
+        }
+        ```
+    """
+    parsed_message = message.replace("```json", "").replace("```", "").strip()
+    print('message')
     print(message)
+    print(parsed_message)
+
+
+    print(EmailIntoTransaction(parsed_message).call())
 
     # for chunk in stream:
     #     if chunk.choices[0].delta.content is not None:
