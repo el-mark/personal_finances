@@ -2,38 +2,41 @@
 
 {% block content %}
 
+    <h2>Transactions</h2>
+    <div class="table-responsive small">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Email ID</th>
+                    <th scope="col">Transaction Date</th>
+                    <th scope="col">Transaction Code</th>
+                    <th scope="col">Issuer</th>
+                    <th scope="col">Source</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Currency</th>
+                    <th scope="col">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.id }}</td>
+                    <td>{{ transaction.email_id }}</td>
+                    <td>{{ transaction.transaction_date }}</td>
+                    <td>{{ transaction.transaction_code }}</td>
+                    <td>{{ transaction.issuer }}</td>
+                    <td>{{ transaction.source }}</td>
+                    <td>{{ transaction.destination }}</td>
+                    <td>{{ transaction.currency.value }}</td>
+                    <td>{{ transaction.amount }}</td>
+                </tr>
+                {% endfor %}
 
-    <h1>Transactions</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Email ID</th>
-                <th>Transaction Date</th>
-                <th>Transaction Code</th>
-                <th>Issuer</th>
-                <th>Source</th>
-                <th>Destination</th>
-                <th>Currency</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for transaction in transactions %}
-            <tr>
-                <td>{{ transaction.id }}</td>
-                <td>{{ transaction.email_id }}</td>
-                <td>{{ transaction.transaction_date }}</td>
-                <td>{{ transaction.transaction_code }}</td>
-                <td>{{ transaction.issuer }}</td>
-                <td>{{ transaction.source }}</td>
-                <td>{{ transaction.destination }}</td>
-                <td>{{ transaction.currency.value }}</td>
-                <td>{{ transaction.amount }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
     
 {% endblock %}
     
