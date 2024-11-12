@@ -86,8 +86,6 @@ def chatgpt():
     """
     parsed_message = message.replace("```json", "").replace("```", "")
 
-    print(EmailIntoTransaction(user_input).call())
-
     json_data = json.loads(parsed_message)
 
-    return render_template('chatgpt.html', message=json_data["moneda"])
+    return render_template('chatgpt.html', message=json_data)

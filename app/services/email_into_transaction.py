@@ -14,8 +14,7 @@ class EmailIntoTransaction:
         # 10 Nov 2024 11:26 AM
         # from: Interbank Servicio al Cliente <servicioalcliente@netinterbank.com.pe>
         # Código de operación:	01483653
-        # Cuenta cargo:	Ahorro Sueldo Soles
-        # 108 3094799772
+        # Cuenta cargo:	Ahorro Sueldo Soles 108 3094799772
         # Destinatario:	Samuel Antonio Pezua Espinoza
         # Destino:	Plin
         # Moneda y monto:	S/ 13.20"
@@ -35,9 +34,9 @@ class EmailIntoTransaction:
                 monto: 30
             }}
 
-            moneda tiene que ser: PEN, USD o NONE
-
-            return only the json object
+            - moneda tiene que ser: PEN, USD o NONE.
+            - fecha es solo el año, mes y día, mas no la hora.
+            return only the json object.
         """
             
         response = client.chat.completions.create(
